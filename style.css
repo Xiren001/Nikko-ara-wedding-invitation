@@ -135,6 +135,12 @@ h2 {
   box-shadow: 0 4px 8px rgba(197, 133, 104, 0.3);
 }
 
+.rsvp-link .rsvp-mobile {
+  display: none;
+}
+.rsvp-link .rsvp-desktop {
+  display: inline;
+}
 
 /* LAYOUT */
 .container {
@@ -319,24 +325,18 @@ h2 {
 
 .two {
   grid-area: two;
-  border-top: 2px solid #cccac4;
   animation: fadeInUp 1s ease-out 1s;
   animation-fill-mode: both;
 }
 
 .three {
   grid-area: three;
-  border-top: 2px solid #cccac4;
-  border-bottom: 2px solid #cccac4;
   animation: fadeInUp 1s ease-out 1.5s;
   animation-fill-mode: both;
 }
 
 .four {
   grid-area: four;
-  border-top: 2px solid #cccac4;
-  border-left: 2px solid #cccac4;
-  border-bottom: 2px solid #cccac4;
   animation: fadeInUp 1s ease-out 1.5s;
   animation-fill-mode: both;
 }
@@ -345,8 +345,8 @@ h2 {
   grid-area: five;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: start;
+  align-items: start;
+  justify-content: center;
   animation: fadeInUp 1s ease-out 2s;
   animation-fill-mode: both;
 }
@@ -356,6 +356,7 @@ h2 {
   justify-content: center;
   gap: 15px;
   margin-top: 10px;
+  margin-left:50px;
   color: #4e4b43;
 }
 
@@ -387,13 +388,18 @@ h2 {
   }
   .contents {
     width: 90%;
-    padding-top: 250px;
+    padding-top: 190px;
+    padding-bottom: 110px;
   }
   .rsvp-form {
     padding: 30px 20px;
   }
   .form-buttons {
     flex-direction: column;
+  }
+
+  .five{
+    padding: 0 50px;
   }
 }
 
@@ -405,7 +411,7 @@ h2 {
 
   .two, .three, .four, .five {
     padding: 25px 0;
-}
+  }
 
   .contents {
     grid-template-columns: 1fr;
@@ -418,18 +424,6 @@ h2 {
       "five";
     width: 65%;
     padding-top: 150px;
-  }
-
-  .three {
-    border-bottom: none;
-  }
-
-  .four {
-    border-left: none;
-  }
-
-  .five {
-    border-top: 2px solid #cccac4;
   }
   
   .rsvp-form {
@@ -459,9 +453,18 @@ h2 {
     .one h2 {
       margin-top: 40px;
   }
-    .contents {
-      padding-top: 100px;
-    }
+  .two, .three, .four, .five {
+    padding: 25px 0;
+}
+
+  .contents {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  #countdown {
+    margin-left:0;
+  }
     
     .rsvp-form {
       padding: 15px 10px;
@@ -473,6 +476,17 @@ h2 {
       padding: 8px;
       font-size: 0.8rem;
     }
+
+    #countdown .label {
+      font-size: 0.3rem;
+    }
+
+  .rsvp-link .rsvp-mobile {
+    display: inline;
+  }
+  .rsvp-link .rsvp-desktop {
+    display: none;
+  }
 }
 
 @keyframes fadeIn {
