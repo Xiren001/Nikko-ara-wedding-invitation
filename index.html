@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Texture Challenge - Pen #9 - 2020</title>
+  <script src="https://kit.fontawesome.com/e2ac9cc532.js" crossorigin="anonymous"></script><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <!-- Front of card -->
+      <div class="flip-card-front">
+        <div class="contents">
+          <div class="one">
+            <h2>Together with their parents</h2>
+            <h1>Nikko Dungca</h1>
+            <h1 class="large-font gold-gradient accent-font">&</h1>
+            <h1>Ara Pateno</h1>
+          </div>
+          <div class="two">
+            <h2>joyfully invite you to</h2>
+            <h2>their wedding celebration</h2>
+          </div>
+          <div class="three">
+            <h1>MONDAY</h1>
+            <h1>AUGUST</h1>
+            <div class="date accent-font">
+              <div class="year-one">
+                <h2>2</h2>
+                <h2>0</h2>
+              </div>
+              <div class="day">
+                <h2>25</h2>
+              </div>
+              <div class="year-two">
+                <h2>2</h2>
+                <h2>5</h2>
+              </div>
+            </div>
+            <h2>at 3 o'clock</h2>
+          </div>
+          <div class="four">
+            <h1>Dologon</h1>
+            <h1>Maramag</h1>
+            <h1>Bukidnon</h1>
+            <h2>Kingdom Hall of</h2>
+            <h2>Jehovah's Witnesses</h2>
+          </div>
+          <div class="five">
+            <button class="rsvp-link" onclick="flipCard()">Kindly <u>RSVP</u> before august 1</button>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=REPLACE_WITH_YOUR_RSVP_LINK" alt="RSVP QR Code" class="qr-code">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Back of card -->
+      <div class="flip-card-back">
+        <div class="rsvp-form">
+          <h1>RSVP</h1>
+          <form action="https://formsubmit.co/mykoxiren992003@gmail.com" method="POST">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="guests">Number of Guests</label>
+              <select id="guests" name="guests" required>
+                <option value="">Select...</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="attending">Will you be attending?</label>
+              <div class="radio-group">
+                <label><input type="radio" name="attending" value="yes" required> Yes</label>
+                <label><input type="radio" name="attending" value="no" required> No</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Message (Optional)</label>
+              <textarea id="message" name="message" rows="3"></textarea>
+            </div>
+            <div class="form-buttons">
+              <button type="submit" class="submit-btn">Submit RSVP</button>
+              <button type="button" class="back-btn" onclick="flipCard()">Back to Invitation</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function flipCard() {
+  const flipCardInner = document.querySelector('.flip-card-inner');
+  flipCardInner.style.transform = flipCardInner.style.transform === 'rotateY(180deg)' 
+    ? 'rotateY(0deg)' 
+    : 'rotateY(180deg)';
+}
+
+const form = document.querySelector('.rsvp-form form');
+const submitButton = form.querySelector('.submit-btn');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  submitButton.disabled = true;
+  submitButton.textContent = 'Submitting...';
+
+  const formData = new FormData(form);
+  const action = form.getAttribute('action');
+  
+  fetch(action, { 
+    method: 'POST', 
+    body: formData,
+    headers: {
+        'Accept': 'application/json'
+    }
+  })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            return response.json().then(data => {
+                if (Object.hasOwn(data, 'message')) {
+                    throw new Error(data.message);
+                }
+                throw new Error('Network response was not ok.');
+            })
+        }
+    })
+    .then(data => {
+        console.log(data);
+        submitButton.textContent = 'Submitted!';
+        setTimeout(() => {
+            form.reset();
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit RSVP';
+            flipCard(); // Flip back to front
+        }, 2000);
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        alert('An error occurred: ' + error.message);
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit RSVP';
+    });
+});
+</script>
+<!-- partial -->
+  
+</body>
+</html>
