@@ -67,6 +67,10 @@ h2 {
 .two, .three, .four, .five {
   padding: 25px 0;
 }
+ .five {
+  padding: 15px 0;
+ }
+
 
 .date {
   display: grid;
@@ -131,12 +135,6 @@ h2 {
   box-shadow: 0 4px 8px rgba(197, 133, 104, 0.3);
 }
 
-.qr-code {
-  border: 6px solid #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  width: 80px;
-  height: 80px;
-}
 
 /* LAYOUT */
 .container {
@@ -348,9 +346,38 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   animation: fadeInUp 1s ease-out 2s;
   animation-fill-mode: both;
+}
+
+#countdown {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+  color: #4e4b43;
+}
+
+#countdown > div {
+  text-align: center;
+}
+
+#countdown span {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #c58568;
+  display: block;
+  line-height: 1;
+  text-shadow: -2px 0px 9px rgba(255,255,255,0.9);
+}
+
+#countdown .label {
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 5px;
 }
 
 @media screen and (max-width: 900px) {
@@ -416,6 +443,10 @@ h2 {
   .rsvp-link {
     font-size: .5rem;
   }
+
+  #countdown span {
+    font-size: .8rem;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -430,11 +461,6 @@ h2 {
   }
     .contents {
       padding-top: 100px;
-    }
-    
-    .qr-code {
-      width: 60px;
-      height: 60px;
     }
     
     .rsvp-form {
@@ -468,3 +494,4 @@ h2 {
     transform: translateY(0);
   }
 }
+

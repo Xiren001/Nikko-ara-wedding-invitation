@@ -52,7 +52,24 @@
           </div>
           <div class="five">
             <button class="rsvp-link" onclick="flipCard()">Kindly <u>RSVP</u> before august 1</button>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=REPLACE_WITH_YOUR_RSVP_LINK" alt="RSVP QR Code" class="qr-code">
+            <div id="countdown">
+              <div>
+                <span id="days">0</span>
+                <div class="label">Days</div>
+              </div>
+              <div>
+                <span id="hours">0</span>
+                <div class="label">Hours</div>
+              </div>
+              <div>
+                <span id="minutes">0</span>
+                <div class="label">Minutes</div>
+              </div>
+              <div>
+                <span id="seconds">0</span>
+                <div class="label">Seconds</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -110,6 +127,39 @@ function flipCard() {
     ? 'rotateY(0deg)' 
     : 'rotateY(180deg)';
 }
+
+function startCountdown() {
+  const countdownDate = new Date("August 25, 2025 15:00:00").getTime();
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+  const countdownEl = document.getElementById("countdown");
+
+  const countdownFunction = setInterval(function() {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+
+    if (distance < 0) {
+      clearInterval(countdownFunction);
+      countdownEl.innerHTML = "<h2 style='letter-spacing: 2px; font-size: 1.2rem;'>The Wedding Day is Here!</h2>";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysEl.innerText = days;
+    hoursEl.innerText = hours;
+    minutesEl.innerText = minutes;
+    secondsEl.innerText = seconds;
+
+  }, 1000);
+}
+
+startCountdown();
 
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxO_5ROmu6H8qUTGUE366qMaYYtA2MDAldyQtsIbVJpRl5v8f_S31v0UycVGhUIXnPdow/exec';
 const form = document.querySelector('.rsvp-form form');
