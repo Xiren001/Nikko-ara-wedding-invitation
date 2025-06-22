@@ -52,8 +52,8 @@
           </div>
           <div class="five">
             <button class="rsvp-link" onclick="flipCard()">
-              <span class="rsvp-desktop">Kindly <u>RSVP</u> before august 1</span>
-              <span class="rsvp-mobile">RSVP - August 1</span>
+              <span class="rsvp-desktop">Kindly <u>RSVP</u> before July 31</span>
+              <span class="rsvp-mobile">RSVP - July 31</span>
             </button>
             <div id="countdown">
               <div>
@@ -133,15 +133,28 @@ function flipCard() {
 
 function startCountdown() {
   const countdownDate = new Date("August 25, 2025 15:00:00").getTime();
+  const rsvpDeadline = new Date("July 31, 2025 23:59:59").getTime();
   const daysEl = document.getElementById("days");
   const hoursEl = document.getElementById("hours");
   const minutesEl = document.getElementById("minutes");
   const secondsEl = document.getElementById("seconds");
   const countdownEl = document.getElementById("countdown");
+  const rsvpBtn = document.querySelector('.rsvp-link');
+  const rsvpDesktop = document.querySelector('.rsvp-desktop');
+  const rsvpMobile = document.querySelector('.rsvp-mobile');
 
   const countdownFunction = setInterval(function() {
     const now = new Date().getTime();
     const distance = countdownDate - now;
+    const rsvpDistance = rsvpDeadline - now;
+
+    // Disable RSVP button after July 31, 11:59 PM
+    if (rsvpDistance < 0) {
+      rsvpBtn.disabled = true;
+      rsvpBtn.classList.add('disabled');
+      if (rsvpDesktop) rsvpDesktop.innerHTML = 'RSVP Closed - Please Contact the Groom';
+      if (rsvpMobile) rsvpMobile.innerHTML = 'RSVP Closed';
+    }
 
     if (distance < 0) {
       clearInterval(countdownFunction);
