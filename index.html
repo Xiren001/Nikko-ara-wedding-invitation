@@ -61,8 +61,7 @@
       <div class="flip-card-back">
         <div class="rsvp-form">
           <h1>RSVP</h1>
-          <form name="rsvp" method="POST" data-netlify="true">
-            <input type="hidden" name="form-name" value="rsvp" />
+          <form>
             <div class="form-group">
               <label for="name">Full Name</label>
               <input type="text" id="name" name="name" required>
@@ -112,6 +111,7 @@ function flipCard() {
     : 'rotateY(180deg)';
 }
 
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxO_5ROmu6H8qUTGUE366qMaYYtA2MDAldyQtsIbVJpRl5v8f_S31v0UycVGhUIXnPdow/exec';
 const form = document.querySelector('.rsvp-form form');
 const submitButton = form.querySelector('.submit-btn');
 
@@ -119,25 +119,23 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   submitButton.disabled = true;
   submitButton.textContent = 'Submitting...';
-
-  const formData = new FormData(form);
   
-  fetch("/", { 
-    method: 'POST', 
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams(formData).toString()
-  })
-    .then(() => {
-        submitButton.textContent = 'Submitted!';
-        setTimeout(() => {
-            form.reset();
-            submitButton.disabled = false;
-            submitButton.textContent = 'Submit RSVP';
-            flipCard(); // Flip back to front
-        }, 2000);
+  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+    .then(response => {
+        if (response.ok) {
+            submitButton.textContent = 'Submitted!';
+            setTimeout(() => {
+                form.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit RSVP';
+                flipCard(); // Flip back to front
+            }, 2000);
+        } else {
+            throw new Error('Network response was not ok.');
+        }
     })
     .catch(error => {
-        console.error('Error!', error);
+        console.error('Error!', error.message);
         alert('An error occurred. Please try again.');
         submitButton.disabled = false;
         submitButton.textContent = 'Submit RSVP';
