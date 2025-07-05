@@ -51,10 +51,13 @@
             <h2>Jehovah's Witnesses</h2>
           </div>
           <div class="five">
-            <button class="rsvp-link" onclick="flipCard()">
-              <span class="rsvp-desktop">Kindly <u>RSVP</u> before July 31</span>
-              <span class="rsvp-mobile">RSVP - July 31</span>
-            </button>
+            <div class="rsvp-button-container">
+              <button class="rsvp-link" onclick="flipCard()">
+                <span class="rsvp-desktop">Kindly <u>RSVP</u> before July 31</span>
+                <span class="rsvp-mobile">RSVP - July 31</span>
+              </button>
+              <div class="bubble-indicator">Click here</div>
+            </div>
             <div id="countdown">
               <div>
                 <span id="days">0</span>
@@ -83,17 +86,18 @@
           <h1>RSVP</h1>
           <form>
             <div class="form-group">
-              <label for="name">Full Name</label>
+              <label for="name">Indicate Name of Guest</label>
               <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
               <input type="email" id="email" name="email" required>
             </div>
-            <div class="form-group">
+                        <div class="form-group">
               <label for="guests">Number of Guests</label>
               <select id="guests" name="guests" required>
                 <option value="">Select...</option>
+                <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -180,6 +184,19 @@ startCountdown();
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxO_5ROmu6H8qUTGUE366qMaYYtA2MDAldyQtsIbVJpRl5v8f_S31v0UycVGhUIXnPdow/exec';
 const form = document.querySelector('.rsvp-form form');
 const submitButton = form.querySelector('.submit-btn');
+
+// Handle guest count when attending selection changes
+document.querySelectorAll('input[name="attending"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const guestsSelect = document.getElementById('guests');
+    if (this.value === 'no') {
+      guestsSelect.value = '0';
+      guestsSelect.disabled = true;
+    } else {
+      guestsSelect.disabled = false;
+    }
+  });
+});
 
 form.addEventListener('submit', e => {
   e.preventDefault();
